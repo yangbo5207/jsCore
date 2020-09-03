@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<script>
+
+class Stack {
+  constructor() {
+    this._i = Symbol('Stack')
+    this[this._i] = {}
+    this.length = 0
+  }
+  push(node) {
+    this[this._i][this.length] = node;
+    this.length++
+  }
+  pop() {
+    if (this.isEmpty()) {
+      return null;
+    }
+    this.length--
+    const r = this[this._i][this.length]
+    delete this[this._i][this.length]
+    return r
+  }
+  getItems() {
+    return this[this._i]
+  }
+  // 获取栈顶节点
+  peek() {
+    if (this.isEmpty()) {
+      return null
+    }
+    return this[this._i][this.length - 1]
+  }
+  isEmpty() {
+    return this.length === 0
+  }
+  clear() {
+    this[this._i] = {}
+    this.length = 0
+  }
+}
+
+const stack = new Stack()
+
+stack.push({a: 1})
+stack.push({b: 2})
+stack.push({c: 3})
+stack.pop()
+console.log(stack)
+
+// 10进制转2进制方法
+function decimalToBinary(number) {
+  // 声明一个栈容器
+  const stack = new Stack()
+  let result = ''
+
+  while(number > 0) {
+    // 将每一次计算的余数放入栈容器中
+    stack.push(number % 2)
+
+    // 计算下一次参与运算的结果
+    number = Math.floor(number / 2)
+  }
+
+  // 拼接栈中的所有余数，得到二进制结果
+  while(!stack.isEmpty()) {
+    result += stack.pop()
+  }
+
+  return result
+}
+
+console.log(decimalToBinary(11))
+console.log(decimalToBinary(20))
+console.log(decimalToBinary(25))
+
+
+/***
+ * @desc 通用，10进制转其他进制
+ * @param {number} number 10进制数字
+ * @param {number} bs 2进制，8进制，16进制
+ * @return {string} 转换结果 
+ **/
+function converter(number, bs) {
+  const stack = new Stack()
+  const digits = '0123456789ABCDEF'
+  let result = ''
+
+  while(number > 0) {
+    stack.push(number % bs)
+    number = Math.floor(number / bs)
+  }
+
+  while (!stack.isEmpty()) {
+    result += digits[stack.pop()]
+  }
+
+  return result
+}
+
+  console.log(converter(11, 2)) // 1011
+  console.log(converter(20, 2)) // 10100
+  console.log(converter(25, 2)) // 11001
+  console.log(converter(25, 8)) // 31
+  console.log(converter(1231, 16))  // 4CF
+
+
+
+function isValid(s) {
+  const stack = new Stack()
+
+  for (var i = 0; i < s.length; i++) {
+    // 当前字符
+    const c = s[i]  
+
+    // 栈顶字符
+    const p = stack.peek()
+    if (c == ')' && p == '(' || c == ']' && p == '[' || c == '}' && p == '{') {
+      // 匹配上了，p 出栈，否则，c 入栈
+      stack.pop()
+    } else {
+      stack.push(c)
+    }
+  }
+
+  // 最后，如果栈为空，则表示完全匹配，否则表示没有完全正确匹配
+  return stack.isEmpty()
+}
+
+console.log(isValid('()'))    // true
+console.log(isValid('()[]{}'))  // true
+console.log(isValid('(]'))  // false
+console.log(isValid('([)]'))  // false
+console.log(isValid('{[]}'))  // true
+</script>
+<body>
+</body>
+</html>
