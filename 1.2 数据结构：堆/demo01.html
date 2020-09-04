@@ -7,196 +7,155 @@
 </head>
 <body>
 <script>
-  class BinaryHeap2 {
-    constructor() {
+
+class BinaryHeap {
+  constructor(compare, array) {
+    this.compare = compare
+    if (array) {
+      this.heap = array
+      this.size = this.heap.length
+      this.buildHeap()
+    } else {
       this.heap = []
+      this.size = 0
     }
-
-    // 判断是否为空
-    isEmpty() {}
-    // 获取节点的父亲节点
-    parent() {}
-    // 获取父节点的左边子节点
-    left() {}
-    // 获取父节点的右边子节点
-    right() {}
-
-    // 节点交换
-    swap() {}
-
-    // 插入节点
-    push() {}
-
-    // 删除堆顶元素
-    pop() {}
-
-    // 获取堆顶元素
-    top() {}
-
-    // 构建堆
-    buildHeap() {}
+  }
+  // 判断是否为空
+  isEmpty() {
+    return this.size == 0
+  }
+  // 通过子节点下标，获取节点的父亲节点
+  parentIndex(i) {
+    return Math.floor((i - 1) / 2)
+  }
+  parent(i) {
+    return this.heap[this.parentIndex(i)]
+  }
+  leftIndex(i) {
+    return 2 * i + 1
+  }
+  // 通过父节点下标，获取父节点的左边子节点
+  left(i) {
+    return this.heap[this.leftIndex(i)]
+  }
+  rightIndex(i) {
+    return 2 * i + 2
+  }
+  // 通过父节点下标，获取父节点的右边子节点
+  right(i) {
+    return this.heap[this.rightIndex(i)]
   }
 
+  // 节点交换
+  swap(i, j) {
+    const temp = this.heap[i]
+    this.heap[i] = this.heap[j]
+    this.heap[j] = temp
+  }
 
-  // 二叉堆构造函数，capacity: 容量，compare: 比较函数，array: 数组
-    function BinaryHeap(capacity, compare, array) {
-      if (array) {
-        this.array = array.concat();
-        this.size = array.length;
-        if (capacity < 3)
-          this.capacity = this.size * 2;
-        else
-          this.capacity = capacity;
-        this.compare = compare;
-      }
-      else {
-        if (capacity < 3)
-          return null;
-        this.array = new Array(capacity);
-        this.size = 0;
-        this.capacity = capacity;
-        this.compare = compare;
-      }
+  // 插入节点
+  push(node) {
+    if (this.size == 0) {
+      this.size ++
+      this.heap[0] = node
+      return
+    } 
+    this.size ++
+    let i = this.size - 1
+    this.heap[i] = node
+    while(i != 0 && this.compare(this.heap[i], this.parent(i))) {
+      this.swap(i, this.parentIndex(i))
+      i = this.parentIndex(i)
     }
+  }
 
-    // 检查二叉堆是否已空
-    BinaryHeap.prototype.isEmpty = function () {
-      return this.size == 0;
+  // 无论是删除元素，或者说构建二叉堆，都需要重新排序，封装统一的方法来支持排序过程
+  heapify(i) {
+    // 找到最小的元素
+    const l = this.leftIndex(i)
+    const r = this.rightIndex(i)
+    let small = i
+    if (l < this.size && this.compare(this.heap[l], this.heap[i])) {
+      small = l
     }
-
-    // 获取结点i的父结点
-    BinaryHeap.prototype.parent = function (i) {
-      return Math.floor((i - 1) / 2);
+    if (r < this.size && this.compare(this.heap[r], this.heap[small])) {
+      small = r
     }
-
-    // 获取结点i的左儿子
-    BinaryHeap.prototype.left = function (i) {
-      return 2 * i + 1;
+    if (small != i) {
+      this.swap(i, small)
+      this.heapify(small)
     }
+  }
 
-    // 获取结点i的右儿子
-    BinaryHeap.prototype.right = function (i) {
-      return 2 * i + 2;
+  // 删除堆顶元素
+  pop() {
+    if (this.size <= 0) {
+      return null
     }
-
-    // 根据数组元素的索引进行交换
-    BinaryHeap.prototype.swap = function (i, j) {
-      var temp = this.array[i];
-      this.array[i] = this.array[j];
-      this.array[j] = temp;
+    if (this.size == 1) {
+      this.size --
+      this.heap.length = this.size
+      return this.heap[0]
     }
+    const root = this.heap[0]
+    this.heap[0] = this.heap[this.size - 1]
+    this.size --
+    this.heap.length = this.size
+    this.heapify(0)
+    return root
+  }
 
-    // 二叉堆push操作，往堆中添加一个新元素
-    BinaryHeap.prototype.push = function (T) {
-      if (this.size == this.capacity) {
-        console.log("overflow: could not push key.");
-        return;
-      }
-      this.size++;
-      var i = this.size - 1;
-      this.array[i] = T;
-      // 上滤操作，由下而上检查
-      while (i != 0 && this.compare(this.array[i], this.array[this.parent(i)])) {
-        this.swap(i, this.parent(i));
-        i = this.parent(i);
-      }
+  // 获取堆顶元素
+  top() {
+    return this.heap[0]
+  }
+
+  // 构建堆
+  buildHeap() {
+    for (let i = Math.floor(this.size / 2); i >= 0; i--) {
+      this.heapify(i)
     }
+  }
+}
 
-    // 获取堆顶元素
-    BinaryHeap.prototype.top = function () {
-      return this.array[0];
-    }
+function compare(a, b) {
+  return a < b;
+}
 
-    // 堆化操作，修复二叉堆的性质，由上而下检查，又称为下滤操作
-    BinaryHeap.prototype.heapify = function (i) {
-      var left = this.left(i);
-      var right = this.right(i);
-      var small = i;
-      if (left < this.size && this.compare(this.array[left], this.array[i]))
-        small = left;
-      if (right < this.size && this.compare(this.array[right], this.array[small]))
-        small = right;
-      if (small != i) {
-        this.swap(i, small);
-        this.heapify(small);
-      }
-    }
+var heap = new BinaryHeap(compare);
+heap.push(1);
+heap.push(2);
+heap.push(3);
+heap.push(4);
+heap.push(5);
+console.log(heap.heap) // [1, 2, 3, 4, 5]
+heap.pop()
+console.log(heap.heap) // [2, 4, 3, 5]
 
-    // 释放堆顶元素，将最后一个元素替换堆顶元素，然后进行下滤堆化操作
-    BinaryHeap.prototype.pop = function () {
-      if (this.size <= 0) {
-        console.log("heap is empty.");
-        return null;
-      }
-      if (this.size == 1) {
-        this.size--;
-        return this.array[0];
-      }
-      var root = this.array[0];
-      this.array[0] = this.array[this.size - 1];
-      this.size--;
-      this.heapify(0);
-      return root;
-    }
+var array = [150, 80, 40, 30, 10, 70, 110, 100, 20, 90, 60, 50, 120, 140, 130]; 
+var h = new BinaryHeap(compare, array);
+console.log(h.heap) // [10, 20, 40, 30, 60, 50, 110, 100, 150, 90, 80, 70, 120, 140, 130]
 
-    // 降低第i个结点的关键字
-    BinaryHeap.prototype.decreaseKey = function (i, NT) {
-      this.array[i] = NT;
-      while (i != 0 && this.compare(this.array[i], this.array[this.parent(i)])) {
-        this.swap(i, this.parent(i));
-        i = this.parent(i);
-      }
-    }
+var _a = array.sort((a, b) => a - b)
+console.log(_a)   // [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150]
 
-    // 删除元素
-    BinaryHeap.prototype.delete = function (i) {
-      // this.decreaseKey(i, Number.MIN_VALUE);
-      // this.pop();
-      if (this.size <= 0) {
-        console.log("heap is empty.");
-        return;
-      }
-      if (this.size == 1) {
-        this.size--;
-        return;
-      }
-      this.array[i] = this.array[this.size - 1];
-      this.size--;
-      this.heapify(i);
-    }
+var _b = array.sort((a, b) => b - a)
+console.log(_b)  // [150, 140, 130, 120, 110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10]
 
-    // 构建堆，用于使用一个数组构建堆的时候进行堆化操作
-    BinaryHeap.prototype.buildHeap = function () {
-      for (var i = Math.floor(this.size / 2); i >= 0; i--)
-        this.heapify(i);
-    }
+const persons = [
+  { name: 'Jake', id: 29 },
+  { name: 'Toms', id: 22 },
+  { name: 'Jone', id: 40 },
+  { name: 'Alex', id: 3 },
+]
 
-    function compare(a, b) {
-      return a < b;
-    }
+const p1 = persons.sort((a, b) => a.id - b.id)
+// 因为引用的关系，下面的代码请分开执行
+console.log(p1)
 
-    function print(heap) {
-      var str = "";
-      while (!heap.isEmpty()) {
-        var value = heap.top();
-        heap.pop();
-        str += value + " ";
-      }
-      console.log(str);
-    }
+// const p2 = persons.sort((a, b) => b.id - a.id)
+// console.log(p2)
 
-    var heap = new BinaryHeap(20, compare);
-    heap.push(95);
-    heap.push(23);
-    heap.push(47);
-    heap.push(36);
-    heap.push(75);
-    print(heap);
-
-    var array = [150, 80, 40, 30, 10, 70, 110, 100, 20, 90, 60, 50, 120, 140, 130];
-    var h = new BinaryHeap(20, compare, array);
-    h.buildHeap();
-    print(h);
 </script>
 </body>
 </html>
