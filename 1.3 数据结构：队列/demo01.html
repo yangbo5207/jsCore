@@ -7,7 +7,7 @@
 </head>
 <body>  
 <script>
-
+ 
 class Queue {
   constructor() {
     this.length = 0
@@ -52,6 +52,11 @@ class Queue {
     delete this.queue[this.length - 1]
     this.length--
     return rq
+  }
+
+  clear() {
+    this.length = 0
+    this.queue = {}
   }
 }
 </script>
