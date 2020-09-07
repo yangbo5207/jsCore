@@ -23,10 +23,10 @@ class Queue {
 
   // 从队列头部出队
   shift() {
+    const rq = this.queue[0]
     for (let i = 0; i < this.length - 1; i++) {
       this.queue[i] = this.queue[i + 1]
     }
-    const rq = this.queue[this.length - 1]
     delete this.queue[this.length - 1]
     this.length--;
     return rq
