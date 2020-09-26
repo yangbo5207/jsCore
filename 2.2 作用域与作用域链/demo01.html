@@ -8,15 +8,53 @@
 <body>
 <script>
 
-function foo() {
-  var a = 1;
-  function bar() {
-    console.log(a);
+// function foo(m, n) {
+//   var a = 1;
+//   let b = 2;
+//   function bar() {
+//     function inner() {
+//       return a + b + m + n;
+//     }
+//     console.dir(inner)
+//   }
+//   console.dir(bar)
+//   bar()
+// }
+
+const a = 20;
+
+function test() {
+  const b = a + 10;
+  var m = 20;
+  const x = 10
+  const y = 20
+
+  function innerTest() {
+    console.log(x, y)
+    const c = 10 + m;
+    console.dir(innerTest)
+
+    function bar() {
+      console.log(c)
+      console.dir(bar)
+    }
+    return bar;
   }
-  console.dir(bar)
+
+  return innerTest();
 }
 
+var foo = test();
 foo()
+
+// 查询栈空间的大小
+function maxStatckSize() {
+  try {
+    return 1 + maxStatckSize()
+  } catch(e) {
+    return 1
+  }
+}
 
 </script>
 </body>
