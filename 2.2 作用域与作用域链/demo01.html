@@ -48,9 +48,12 @@ var foo = test();
 foo()
 
 // 查询栈空间的大小
-function maxStatckSize() {
+function mc() {
+  var a = 1
+  var b = 2
+  const c = 10
   try {
-    return 1 + maxStatckSize()
+    return 1 + mc()
   } catch(e) {
     return 1
   }
