@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>执行上下文</title>
+</head>
+<body>
+<script>
+
+function foo(m, n) {
+  var a = 1;
+  let b = 2;
+  const c = 3;
+  class A {}
+  console.log(bar)
+  function bar() {}
+  return a + b + c + m + n;
+}
+
+foo(10, 20)
+
+</script>
+</body>
+</html>
