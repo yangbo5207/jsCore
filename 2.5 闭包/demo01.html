@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>闭包</title>
+</head>
+<body>
+  
+<script>
+  const g = 10
+
+  function foo() {
+    let a = 10;
+    let b = 20;
+
+    function bar() {
+      a = a + 1;
+      console.log(a)
+      const c = 30;
+
+      return a + b + c;
+    }
+    console.dir(bar)
+    return bar
+  }
+
+  // 在全局上下文中，保留 foo 的执行结果，也就是 内部函数 bar 的引用
+  var bar1 = foo()
+
+  // 多次执行
+  bar1()
+  bar1()
+  bar1()
+
+  // 在全局上下文中，保留 foo 的执行结果，也就是 内部函数 bar 的引用
+  var bar2 = foo()
+
+  // 多次执行
+  bar2()
+  bar2()
+  bar2()
+</script>
+</body>
+</html>

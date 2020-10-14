@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>闭包与 setTimeout 循环面试题</title>
+</head>
+<body>
+  
+<script>
+
+// for (let i = 1; i <= 5; i++) {
+//   // (function(i) {
+//   //   setTimeout(() => {
+//   //     console.log(i)
+//   //   }, i * 1000)
+//   // })(i)
+
+//     // setTimeout((function(i) {
+//     //   return () => {
+//     //     console.log(i)
+//     //   }
+//     // })(i), i * 1000)
+
+//   setTimeout(function timer() {
+//     console.log(i);
+//   }, i * 1000);
+// }
+for(var i = 1; i <= 5; i++) {
+  setTimeout((function (i) {
+    return function timer() {
+      console.log(i);
+    }
+  })(i), i * 1000);
+}
+
+for (var i = 1; i <= 5; i++) {
+  (function (i) {
+    setTimeout(function timer() {
+      console.log(i);
+    }, i * 1000);
+  })(i)
+}
+</script>
+</body>
+</html>
