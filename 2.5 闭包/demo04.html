@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单例模式</title>
+</head>
+<body>
+  
+<script>
+
+var per = (function () {
+  var name = 'Jake';
+  var age = 20;
+
+  return {
+    getName: function () {
+      return name;
+    },
+
+    getAge: function () {
+      return age;
+    }
+  }
+})();
+
+// 访问私有变量
+per.getName();
+
+
+
+var person = (function () {
+  // 定义一个变量，用来保存实例
+  var instance = null;
+  var name = 'Jake';
+  var age = 20;
+
+  // 初始化方法
+  function initial() {
+    return {
+      getName: function () { return name; },
+      getAge: function () { return name; }
+    }
+  }
+
+  return {
+    getInstance: function () {
+      if (!instance) {
+        instance = initial();
+      }
+      return instance;
+    }
+  }
+})();
+
+// 只在使用时获得实例
+var p1 = person.getInstance();
+var p2 = person.getInstance();
+
+console.log(p1 === p2); // true
+</script>
+</body>
+</html>
