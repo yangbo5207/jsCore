@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>this</title>
+</head>
+<body>
+<script>
+  
+//   // 通过this绑定到全局对象
+//   this.a2 = 20;
+
+//   // 通过声明绑定到变量对象，但在全局环境中，变量对象就是它自身
+//   var a1 = 10;
+
+//   // 仅仅只有赋值操作，标识符会隐式绑定到全局对象
+//   a3 = 30;
+
+//   // 输出结果会全部符合预期
+
+
+// function foo(a) {
+//   'use strict';
+//   // 严格模式下无法访问 arguments.callee
+//   // console.log(arguments.callee)
+//   console.log(this)
+// }
+
+// foo(10)
+
+// demo01
+var a = 20;
+
+var obj = {
+  a: 40
+}
+
+function fn() {
+  console.log('fn this: ', this);
+
+  function foo() {
+    console.log(this.a);
+  }
+  foo();
+}
+
+fn.call(obj);
+fn();
+
+</script>
+</body>
+</html>
