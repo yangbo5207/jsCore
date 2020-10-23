@@ -30,24 +30,119 @@
 // foo(10)
 
 // demo01
+// var a = 20;
+
+// var obj = {
+//   a: 40
+// }
+
+// function fn() {
+//   console.log('fn this: ', this);
+
+//   function foo() {
+//     console.log(this.a);
+//   }
+//   foo();
+// }
+
+// fn.call(obj);
+// fn();
+
+
+// demo02
+
+// 'use strict';
+
+// var a = 20;
+// function foo() {
+//   var a = 1;
+//   var obj = {
+//     a: 10,
+//     c: this.a + 20
+//   }
+//   return obj.c;
+
+// }
+
+// console.log(window.foo()); // 20
+// console.log(foo()); // 报错 TypeError
+
+
+// demo03
+// var a = 20;
+// var foo = {
+//   a: 10,
+//   getA: function () {
+//     return this.a;
+//   }
+// }
+// console.log(foo.getA()); // 10
+
+// var test = foo.getA;
+// console.log(test()); // 20
+
+// demo04
+// function foo() {
+//   console.log(this.a)
+// }
+
+// function active(fn) {
+//   fn();
+// }
+
+// var a = 20;
+// var obj = {
+//   a: 10,
+//   getA: foo,
+//   active: active
+// }
+
+// active(obj.getA); // 输出的值是多少？
+// obj.active(obj.getA); // 输出的值是多少?
+
+  // demo05
+// var n = 'window';
+// var object = {
+//   n: 'object',
+//   getN: function () {
+//     return function () {
+//       return this.n;
+//     }
+//   }
+// }
+
+// console.log(object.getN()()); // 输出的结果是多少？
+
+
+// function fn(num1, num2) {
+// return this.a + num1 + num2;
+// }
+
+// var a = 20;
+// var object = { a: 40 }
+
+// // 正常执行
+// fn(10, 10); // 40
+
+// // 通过call改变this指向
+// fn.call(object, 10, 10); // 60
+
+// // 通过apply改变this指向
+// fn.apply(object, [10, 10]); // 60
+
+
+function fn(num1, num2) {
+  return this.a + num1 + num2;
+}
+
 var a = 20;
+var object = { a: 40 }
 
-var obj = {
-  a: 40
-}
+var _fn = fn.bind(object, 1, 2);
 
-function fn() {
-  console.log('fn this: ', this);
-
-  function foo() {
-    console.log(this.a);
-  }
-  foo();
-}
-
-fn.call(obj);
-fn();
-
+console.log(_fn === fn); // false
+_fn(); // 43
+_fn(1, 4); // 43 因为参数被绑定，因此重新传入参数是无效的
 </script>
 </body>
 </html>

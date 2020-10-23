@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>调试工具</title>
+</head>
+<body>
+
+<script>
+function foo() {
+  var a = 10;
+
+  function fn2() {
+    var b = 10;
+    console.log(b);
+  }
+
+  function fn1() {
+    console.log(a);
+  }
+
+  fn2();
+  fn1()
+}
+
+foo();
+</script>
+</body>
+</html>
