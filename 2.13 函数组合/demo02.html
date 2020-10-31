@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>函数组合 - 洋葱模型</title>
+</head>
+<body>
+  
+<script>
+
+// ...args 为ES6语法中的不定参数，args表示一个由所有参数组成的数组，最新的chrome浏览器已经支持该语法
+function compose(...args) {
+  const x = args[args.length - 1]
+  
+  return args.reduceRight((pre, cur, i) => {
+    console.log(pre, cur, i)
+    return cur(pre)
+  })
+}
+
+const fn1 = function (a) { return a + 100 }
+const fn2 = function (a) { return a + 10 }
+const fn3 = function (a) { return a + 20 }
+
+const bar = compose(fn1, fn2, fn3, 10);
+console.log('案例1执行结果：', bar);
+
+
+// 高阶函数1，注入参数 env
+const foo1 = (() => {
+  const env = {
+    iOS: true,
+    android: false
+  }
+
+  return (baseFn) => {
+    return baseFn.bind(null, env)
+  }
+})()
+
+// 高阶函数2，注入参数
+const foo2 = (() => {
+  const loginInfo = {
+    isLogin: true,
+    name: 'TOM',
+    age: 20,
+    token: '123xsadfklsdh112sdjfhn'
+  }
+
+  return (baseFn) => {
+    return baseFn.bind(null, loginInfo)
+  }
+})()
+
+const homePage = (...args) => {
+  console.log(args)
+  // todo 执行其他当前页面的逻辑
+}
+
+const page = compose(foo1, foo2, homePage)
+page()
+
+</script>
+</body>
+</html>

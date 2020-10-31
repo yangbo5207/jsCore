@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>封装</title>
+</head>
+<body>
+  
+
+<script>
+function mergeArr(arr) {
+  const result = 0;
+  for (let i = 0; i++; i < arr.length) {
+    result += arr[i];
+  }
+
+  return result;
+}
+
+
+function getUser(path, callback) {
+  return $.get(path, function (info) {
+    return callback(info);
+  })
+}
+
+getUser('/api/user', function (resp) {
+  // resp为成功请求之后返回的数据
+  console.log(resp);
+})
+
+</script>  
+</body>
+</html>
