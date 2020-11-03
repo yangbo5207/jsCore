@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>对象</title>
+</head>
+<body>
+<script>  
+
+const person = {
+  name: 'TOM',
+  age: 20
+}
+
+// 使用for-in枚举person的属性
+const params = [];
+
+for (var key in person) {
+  params.push(key);
+}
+
+// 查看枚举结果
+console.log(params); // ['name', 'age']
+
+// 重新设置name属性的类型，让其不可被枚举
+Object.defineProperty(person, 'name', {
+  enumerable: false
+})
+
+const params_ = [];
+for (var key in person) {
+  params_.push(key)
+}
+
+// 再次查看枚举结果
+console.log(params_); // ['age']
+
+</script>
+</body>
+</html>

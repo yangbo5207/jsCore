@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>对象</title>
+</head>
+<body>
+<script>  
+// 用普通的方式给person对象添加一个name属性，值为TOM
+  const person = {
+    name: 'TOM'
+  }
+
+  // 使用delete删除该属性
+  delete person.name; // 返回true 表示删除成功
+
+  // 通过Object.defineProperty重新添加name属性
+  // 并设置name的属性类型的configurable为false，表示不能再用delete删除
+  Object.defineProperty(person, 'name', {
+    configurable: false,
+    value: 'Jake' // 设置name属性的值
+  })
+
+  // 再次delete，已经不能删除了
+  delete person.name // false
+
+  console.log(person.name) // 值为Jake
+
+  // 试图改变value
+  person.name = "alex";
+  console.log(person.name) // Jake 改变失败
+
+</script>
+</body>
+</html>

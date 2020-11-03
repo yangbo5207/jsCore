@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>对象</title>
+</head>
+<body>
+<script>  
+const person = {
+  name: 'TOM'
+}
+
+// 修改name的值
+person.name = 'Jake';
+
+// 查看修改结果
+console.log(person.name); // Jake 修改成功
+
+// 设置name的值不能被修改
+Object.defineProperty(person, 'name', {
+  writable: false
+})
+
+// 再次试图修改name的值
+person.name = 'alex';
+
+console.log(person.name); // Jake 修改失败
+
+</script>
+</body>
+</html>
