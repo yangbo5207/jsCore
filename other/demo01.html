@@ -6,6 +6,65 @@
   <title>层叠上下文</title>
 </head>
 <body>
-  
+  <script>
+      // args 用来收集参数
+      function createCurry(func, arity, args) {
+        // 第一次执行时，并不会传入arity，而是直接获取func参数的个数 func.length
+        var arity = arity || func.length;
+
+        // 第一次执行也不会传入args，而是默认为空数组
+        var args = args || [];
+
+        console.log(arity, args, 'xxx')
+
+        var wrapper = function () {
+
+          // 将wrapper中的参数收集到args中
+          var _args = [].slice.call(arguments);
+          [].push.apply(_args, args);
+
+          // 如果参数个数小于最初的func.length，则递归调用，继续收集参数
+          if (_args.length < arity) {
+            arity -= _args.length;
+            return createCurry(func, arity, _args);
+          }
+
+          // 参数收集完毕，则执行func
+          return func.apply(func, _args);
+        }
+
+        return wrapper;
+      }
+      // 简单实现，参数只能从右到左传递
+        // function createCurry(func, args) {
+
+        //   var arity = func.length;
+        //   var args = args || [];
+
+        //   return function () {
+        //     var _args = [].slice.call(arguments);
+        //     [].push.apply(_args, args);
+        //     console.log(args, 'xxx')
+
+        //     // 如果参数个数小于最初的func.length，则递归调用，继续收集参数
+        //     if (_args.length < arity) {
+        //       return createCurry.call(this, func, _args);
+        //     }
+
+        //     // 参数收集完毕，则执行func
+        //     return func.apply(this, _args);
+        //   }
+        // }
+      function check(targetString, reg) {
+          return reg.test(targetString);
+        }
+      var _check = createCurry(check);
+
+      var checkPhone = _check(/^1[34578]\d{9}$/);
+
+      console.log(checkPhone('18301022997'));
+      console.log(checkPhone('183888888'));
+      // console.log(checkPhone('18301022997'));
+  </script>
 </body>
 </html>
