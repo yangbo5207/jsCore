@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>无缝滚动对象</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <style>
+    body {
+        margin: 0;
+    }
+
+    .wrap {
+        max-width: 960px;
+        width: 90%;
+        margin: 20px auto;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    ul, li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .items {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .item {
+        display: inline-block;
+        width: 240px;
+        text-align: center;
+    }
+
+    .item div {
+        width: 90%;
+        height: 100px;
+        background: orange;
+        color: #FFF;
+        font-size: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+@media (max-width: 780px) {
+  .item {
+    width: 190px;
+  }
+}
+
+@media (max-width: 580px) {
+  .item {
+    width: 160px;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <ul class="items"><!--
+      --><li class="item"><div>1</div></li><!--
+      --><li class="item"><div>2</div></li><!--
+      --><li class="item"><div>3</div></li><!--
+      --><li class="item"><div>4</div></li><!--
+      --><li class="item"><div>5</div></li><!--
+      --><li class="item"><div>6</div></li><!--
+    --></ul>
+  </div>
+
+  <script src="./index.js"></script>
+</body>
+</html>
