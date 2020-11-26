@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>选项卡对象</title>
+  <style>
+    body {
+  margin: 0;
+}
+
+ul, li {
+  list-style: none;
+  padding: 0;
+}
+
+#tab_wrap {
+  max-width: 400px;
+  margin: 10px auto;
+  background: #efefef;
+}
+
+#tab_wrap .tab_options {
+  height: 40px;
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #ccc;
+}
+#tab_wrap .tab_options li {
+  line-height: 40px;
+  cursor: pointer;
+}
+#tab_wrap .tab_options li.active {
+  color: red;
+  border-bottom: 1px solid red;
+}
+
+#tab_wrap .tab_content {
+  min-height: 400px;
+  position: relative;
+}
+
+#tab_wrap .tab_content .item_box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  display: none;
+  text-align: center;
+}
+#tab_wrap .tab_content .item_box.active {
+  display: block;
+}
+  </style>
+</head>
+<body>
+  <div class="box" id="tab_wrap">
+    <ul class="tab_options">
+      <li data-index="0" class="item active">tab1</li>
+      <li data-index="1" class="item">tab2</li>
+      <li data-index="2" class="item">tab3</li>
+      <li data-index="3" class="item">tab4</li>
+    </ul>
+    <div class="tab_content">
+      <div class="item_box active">tab box 1</div>
+      <div class="item_box">tab box 2</div>
+      <div class="item_box">tab box 3</div>
+      <div class="item_box">tab box 4</div>
+    </div>
+  </div>
+</body>
+<script src="./index.js"></script>
+</html>
