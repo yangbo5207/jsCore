@@ -9,6 +9,7 @@ const nextFrame = window.requestAnimationFrame ||
                     return setTimeout(callback, delay)
                   };
 
+// 偷个懒                  
 const cancelFrame = window.cancelAnimationFrame ||
                     window.webkitCancelAnimationFrame ||
                     clearTimeout;
