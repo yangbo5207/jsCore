@@ -4,9 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>观察者模式</title>
-  <script src="./1.js"></script>
+  <style>
+    .wapper {
+      position: absolute;
+      width: 100px;
+      border: 1px solid red;
+      overflow-x: auto;
+    }
+    .item {
+      height: 100px;
+      width: 20px;
+      background-color: orange;
+      position: absolute;
+    }
+  </style>
 </head>
 <body>
-  
+  <div id="name">{{name}}</div>
+
+  <div class="wapper">
+    <div class="item"></div>
+  </div>
+  <script src="./4.js"></script>
 </body>
 </html>
