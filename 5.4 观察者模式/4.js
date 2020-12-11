@@ -1,8 +1,48 @@
+
+class Observer {
+  constructor(data) {
+    this.data = data;
+    this.walk(data);
+  }
+  walk(data) {
+    Object.keys(data).forEach((key) => {
+      this.defineReactive(data, key, data[key]);
+    });
+  }
+  defineReactive(data, key, val) {
+    const dep = new Dep();
+    Object.defineProperty(data, key, {
+      enumerable: true,
+      configurable: true,
+      get: () => {
+        if (Dep.target) {
+          dep.addSub(Dep.target);
+        }
+        return val;
+      },
+      set: function (newVal) {
+        if (newVal === val) {
+          return;
+        }
+        val = newVal;
+        dep.notify();
+      }
+    });
+  }
+}
+
+function observe(value, vm) {
+  if (!value || typeof value !== 'object') {
+    return;
+  }
+  return new Observer(value);
+};
+
 class Watcher {
   constructor(vm, exp, cb) {
-    this.cb = cb;
     this.vm = vm;
     this.exp = exp;
+    this.cb = cb;
     this.value = this.get();  // 将自己添加到订阅器的操作
   }
   update() {
@@ -24,102 +64,62 @@ class Watcher {
   }
 }
 
-function Observer(data) {
-  this.data = data;
-  this.walk(data);
-}
-Observer.prototype = {
-  walk: function (data) {
-    var self = this;
-    Object.keys(data).forEach(function (key) {
-      self.defineReactive(data, key, data[key]);
-    });
-  },
-  defineReactive: function (data, key, val) {
-    var dep = new Dep();
-    var childObj = observe(val);
-    Object.defineProperty(data, key, {
-      enumerable: true,
-      configurable: true,
-      get: function () {
-        if (Dep.target) {
-          dep.addSub(Dep.target);
-        }
-        return val;
-      },
-      set: function (newVal) {
-        if (newVal === val) {
-          return;
-        }
-        val = newVal;
-        dep.notify();
-      }
-    });
-  }
-};
 
-function observe(value, vm) {
-  if (!value || typeof value !== 'object') {
-    return;
+class Dep {
+  constructor() {
+    this.subs = []
   }
-  return new Observer(value);
-};
-
-function Dep() {
-  this.subs = [];
-}
-Dep.prototype = {
-  addSub: function (sub) {
+  addSub(sub) {
     this.subs.push(sub);
-  },
-  notify: function () {
+  }
+  notify() {
     this.subs.forEach(function (sub) {
       sub.update();
     });
   }
-};
+}
+
 Dep.target = null;
 
 
+class Vue {
+  constructor(options, el, exp) {
+    this.data = options.data;
+    Object.keys(this.data).forEach((key) => {
+      this.proxyKeys(key);
+    });
 
-function SelfVue(data, el, exp) {
-  var self = this;
-  this.data = data;
-
-  Object.keys(data).forEach(function (key) {
-    self.proxyKeys(key);
-  });
-
-  observe(data);
-  el.innerHTML = this.data[exp];  // 初始化模板数据的值
-  new Watcher(this, exp, function (value) {
-    el.innerHTML = value;
-  });
-  return this;
-}
-
-SelfVue.prototype = {
-  proxyKeys: function (key) {
-    var self = this;
+    // 劫持 data
+    observe(this.data);
+    
+    // 初始化显示
+    el.innerHTML = this.data[exp];  
+    new Watcher(this, exp, function (value) {
+      el.innerHTML = value;
+    });
+    return this;
+  }
+  proxyKeys(key) {
     Object.defineProperty(this, key, {
       enumerable: false,
       configurable: true,
-      get: function proxyGetter() {
-        return self.data[key];
+      get: () => {
+        return this.data[key];
       },
-      set: function proxySetter(newVal) {
-        self.data[key] = newVal;
+      set: (newVal) => {
+        this.data[key] = newVal;
       }
     });
   }
 }
 
-var ele = document.querySelector('#name');
-var selfVue = new SelfVue({
-  name: 'hello world'
-}, ele, 'name');
+var ele = document.querySelector('#wrap');
+var vue = new Vue({
+  data: {
+    text: 'hello world'
+  }
+}, ele, 'text');
 
-window.setTimeout(function () {
-  console.log('name值改变了');
-  selfVue.name = 'canfoo';
-}, 2000);
+document.addEventListener('click', function() {
+  vue.data.text = `${vue.data.text} vue click.`
+}, false)
