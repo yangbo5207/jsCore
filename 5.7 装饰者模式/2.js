@@ -166,10 +166,6 @@ class Student {
 var p = new Student('hu', 18);
 console.log(p.getAge(), p.getName(), p.getOther()); // 22 "xiaom" "other info."
 
-
-
-
-
 export function ClothDecorator(target) {
   target.prototype.getCloth = function (cloth) {
     this.hp += cloth.hp;
@@ -234,4 +230,8 @@ class Soldier extends Role {
   attack() {
     console.log('战士的基础攻击');
   }
+}
+
+const person = {
+  name: 'basing'
 }
