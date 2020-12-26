@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>dom异步</title>
+  <title>DOM 渲染是否异步</title>
 </head>
 
 <body>
@@ -15,8 +15,13 @@
       console.log('DOM 更改完毕')
       document.body.appendChild(document.createElement("input"));//插入一个节点
       for (var i = 0; i < 10000000000; i++);
+      console.log('xxxx')
     }
+
+setTimeout(() => {
+  console.log('定时器的回调逻辑')
+}, 0)
+console.log('代码的最后位置')
   </script>
 </body>
-
 </html>
