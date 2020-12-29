@@ -6,24 +6,47 @@
   <title>事件循环</title>
 </head>
 <body>
-  
+  <button id="button">点击事件</button>
 </body>
-<script src="3.js"></script>
+<!-- <script src="4.js"></script> -->
+<script src="5.js"></script>
 <!-- <script>
-  console.log('管不得')
+  console.log(Date.now())
+  setTimeout(() => {
+    console.log(4.1)
+    setTimeout(() => {
+      console.log(4.12)
+    }, 0)
+  }, 2000)
+  setTimeout(() => {
+    console.log(4.3)
+    setTimeout(() => {
+      console.log(4.13)
+    }, 0)
+  }, 1000)
   new Promise((resolve) => {
     resolve()
   }).then(() => {
-    console.log('222222222222')
+    console.log(2)
   })
-</script>
-
+  console.log(1)
+  document.onclick = () => {
+    console.log('click')
+  }
+  let a = 0
+  for (var i = 0; i < 1000000000; i++) {
+    a+=i
+  };
+</script> -->
+<!-- 
 <script>
-  console.log('-333333--')
-  new Promise((resolve) => {
-      resolve()
-    }).then(() => {
-      console.log('3333333333')
-    })
+  document.onclick = () => {
+    console.log('click2')
+  }
+  console.log(3)
+  setTimeout(() => {
+    console.log(4.2)
+  }, 0)
+  console.log(Date.now())
 </script> -->
 </html>
