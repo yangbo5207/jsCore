@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import Person from './person'
+import Person2, {fn, bar} from './person2'
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
@@ -15,3 +18,8 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+
+const p1 = new Person('TOM', 20)
+console.log(p1.getName())
+
