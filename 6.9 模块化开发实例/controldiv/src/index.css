@@ -1,0 +1,9 @@
+#control .target {
+  width: 200px;
+  height: 200px;
+  background-color: #cccccc;
+  transition: 0.3s;
+}
+#control .target.hide {
+  display: none;
+}
