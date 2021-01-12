@@ -6,6 +6,7 @@ if (!news) {
   throw new Error('容器元素不存在')
 }
 
+// 初始值
 news.innerHTML = '数据加载中...'
 
 newsApi().then(res => {
