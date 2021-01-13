@@ -1,7 +1,7 @@
 # jsCore
 JavaScript 核心进阶课程案例
 
-电子书地址：[jS 核心精读](https://www.yuque.com/coreadvance/kagkke)
+电子书地址：[jS 核心精读](https://xiaozhuanlan.com/afed)
 
 #### 作者介绍
 这波能反杀，10年互联网从业经验，大前端架构师，目前创业中。乐于并善于分享技术与工作心得。工作之余，致力于研究如何让前端学习变得更轻松。
