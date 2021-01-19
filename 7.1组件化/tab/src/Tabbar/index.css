@@ -1,0 +1,53 @@
+body {
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+.tab_container {
+  width: 300px;
+  margin: 20px auto;
+  border: 1px solid #CCC;
+  height: 400px;
+}
+
+.titles {
+  display: flex;
+  height: 44px;
+  border-bottom: 1px solid #CCC;
+}
+
+.titles .item {
+  flex: 1;
+  height: 100%;
+  text-align: center;
+  line-height: 44px;
+  font-size: 12px;
+}
+
+.titles .item.active {
+  background-color: orange;
+  color: #FFF;
+}
+
+.contents {
+  position: relative;
+  height: 100%;
+}
+
+.contents .item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.contents .item.active {
+  display: flex;
+}
