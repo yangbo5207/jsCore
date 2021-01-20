@@ -1,0 +1,15 @@
+#control {
+  width: 500px;
+  margin: 100px auto;
+}
+
+#control .target {
+  width: 200px;
+  height: 200px;
+  border: 2px solid #FFF;
+  background-color: #cccccc;
+  transition: 0.3s;
+}
+#control .target.hide {
+  display: none;
+}
