@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import Taost from './components/Toast'
 import './App.css';
 
 function App() {
@@ -30,9 +31,14 @@ function App() {
     width,
     height
   }
+
+  function handlerClick() {
+    Taost.info('今天天气不错', 1000, true)
+  }
   
   return (
     <div id="control">
+      <button onClick={handlerClick}>Toast mask</button>
       <div className="control_wrap">
         <div><button className="show" onClick={() => setShow(!show)}>show/hide</button></div>
         <div>
