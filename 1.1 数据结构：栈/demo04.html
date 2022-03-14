@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<script>
+// 可排序栈
+class Stack {
+  constructor() {
+    this._i = Symbol('Stack')
+    this[this._i] = {}
+    this.length = 0
+  }
+  push(node) {
+    this[this._i][this.length] = node;
+    this.length++
+  }
+  pop() {
+    if (this.isEmpty()) {
+      return null;
+    }
+    this.length--
+    const r = this[this._i][this.length]
+    delete this[this._i][this.length]
+    return r
+  }
+  getItems() {
+    return this[this._i]
+  }
+  // 获取栈顶节点
+  peek() {
+    if (this.isEmpty()) {
+      return null
+    }
+    return this[this._i][this.length - 1]
+  }
+  isEmpty() {
+    return this.length === 0
+  }
+  clear() {
+    this[this._i] = {}
+    this.length = 0
+  }
+}
+
+class SortedStack {
+  constructor() {
+    this.stack = new Stack()
+    this.temp = new Stack()
+  }
+
+  push(value) {
+    if (this.stack.isEmpty()) {
+      return this.stack.push(value)
+    }
+
+    while(!this.stack.isEmpty() && this.stack.peek() < value) {
+      this.temp.push(this.stack.pop())
+    }
+    this.stack.push(value)
+    while(!this.temp.isEmpty()) {
+      this.stack.push(this.temp.pop())
+    }
+  }
+  pop() {
+    return this.stack.pop()
+  }
+  peek() {
+    return this.stack.isEmpty() ? -1 : this.stack.peek()
+  }
+  isEmpty() {
+    return this.stack.isEmpty()
+  }
+}
+
+var s = new SortedStack()
+
+s.push(1)
+s.push(100)
+  s.push(100)
+  s.push(101)
+  s.push(99)
+  s.push(10)
+
+  console.log(s)
+
+</script>
+<body>
+</body>
+</html>
