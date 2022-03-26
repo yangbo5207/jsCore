@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<script>
+
+// 先定义一个数量上限
+const up = 159999
+  
+
+var map = new Map()
+
+// 写入
+for(var i = 0; i < up; i++) {
+  map.set(`f${i}`, {a: i, children: { a: i }})
+}
+
+var mt1 = performance.now()
+
+
+// 删除
+// for(var i = 0; i < up; i++) {
+//   map.delete(`f${i}`)
+// }
+
+// 访问
+for (var i = 0; i < up; i++) {
+  map.get(`f${i}`)
+}
+
+
+console.log(`   Map: `, performance.now() - mt1)
+
+var obj = {}
+
+for (var i = 0; i < up; i++) {
+  obj[`f${i}`] = {b: i, children: {a: i}}
+}
+
+var ot1 = performance.now()
+
+
+// for (var i = 0; i < up; i++) {
+//   delete obj[`f${i}`]
+// }
+for (var i = 0; i < up; i++) {
+  obj[`f${i}`]
+}
+
+
+console.log('Object: ', performance.now() - ot1)
+
+
+// var array = []
+// for (var i = 0; i <= 10000; i++) {
+//   array.push(i+1)
+// }
+
+// var t1 = Date.now()
+
+// const a = array.map(key => {
+//   return key
+// })
+
+// var t2 = Date.now() - t1
+// console.log('数组时间', t2)
+
+
+// var map = new Map()
+
+// for(var i = 0; i<= 10000; i++) {
+//  map.set(i, i+1)  
+// }
+
+
+// var t3 = Date.now()
+
+// var r = []
+// var b = map.forEach(key => {
+//   r.push(key)
+// })
+
+// var t4 = Date.now() - t3
+// console.log('Map时间', t4)
+
+
+</script>
+</body>
+</html>
+
+
+FA FA
+ba Ma
