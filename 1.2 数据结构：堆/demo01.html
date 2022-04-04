@@ -69,18 +69,25 @@ class BinaryHeap {
     }
   }
 
-  // 无论是删除元素，或者说构建二叉堆，都需要重新排序，封装统一的方法来支持排序过程
+  // 无论是删除元素，或者说构建二叉堆，都需要重新排序，封装统一的方法来支持排序过程，
+  // 叶子节点不会调用此方法
+  // 向下调整
   heapify(i) {
     // 找到最小的元素
     const l = this.leftIndex(i)
     const r = this.rightIndex(i)
+    const pv = this.heap[i],
+          lv = this.heap[l],
+          rv = this.heap[r]
+
     let small = i
-    if (l < this.size && this.compare(this.heap[l], this.heap[i])) {
+    if (l < this.size && this.compare(lv, pv)) {
       small = l
     }
-    if (r < this.size && this.compare(this.heap[r], this.heap[small])) {
+    if (r < this.size && this.compare(rv, this.heap[small])) {
       small = r
     }
+
     if (small != i) {
       this.swap(i, small)
       this.heapify(small)
@@ -93,9 +100,10 @@ class BinaryHeap {
       return null
     }
     if (this.size == 1) {
+      let node = this.heap[this.size]
       this.size --
       this.heap.length = this.size
-      return this.heap[0]
+      return node
     }
     const root = this.heap[0]
     this.heap[0] = this.heap[this.size - 1]
@@ -110,9 +118,9 @@ class BinaryHeap {
     return this.heap[0]
   }
 
-  // 构建堆
+  // 构建堆，从最后一个非叶子节点开始遍历构建
   buildHeap() {
-    for (let i = Math.floor(this.size / 2) - 1; i >= 0; i--) {
+    for (let i = this.parentIndex(this.size); i >= 0; i--) {
       this.heapify(i)
     }
   }
@@ -135,6 +143,10 @@ console.log(heap.heap) // [2, 4, 3, 5]
 var array = [150, 80, 40, 30, 10, 70, 110, 100, 20, 90, 60, 50, 120, 140, 130]; 
 var h = new BinaryHeap(compare, array);
 console.log(h.heap) // [10, 20, 40, 30, 60, 50, 110, 100, 150, 90, 80, 70, 120, 140, 130]
+
+for(var i = 0; i < 15; i++) {
+  console.log(h.pop())
+}
 
 var _a = array.sort((a, b) => a - b)
 console.log(_a)   // [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150]
