@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据结构堆 案例一</title>
+</head>
+<body>
+<script>
+
+  // 时间复杂度：数组：查找到对应阶段：O(n) ，插入O(n)
+  // 时间复杂度：链表：查找到对应阶段：O(n) , 插入O(1)
+
+// 节点
+const node = {
+  next: null,
+  prev: null,
+  priority: 0,  // 实践中可能会单独传一个标识来标识当前节点的优先级
+  value: 0 // 此处案例中我们直接使用value的大小来表达
+}
+
+class PriorityQueue {
+  constructor() {
+    this.head = null
+    this.last = null
+    this.size = 0
+  }
+  // 判断是否为空
+  isEmpty() {
+    return this.size == 0
+  }
+
+  // 插入节点
+  push(task, priority) {
+    const curNode = { ...node, value: task, priority }
+    if (this.size == 0) {
+      this.size ++
+      this.head = curNode
+      this.last = curNode
+      return
+    }
+
+    this.size ++
+    
+    let temp = this.head
+    let parent = null
+    
+    while(temp != null && temp.priority >= priority) {
+      parent = temp
+      temp = temp.next
+    }
+    // 所有的节点优先级都比新节点的 低
+    if (!parent) {
+      curNode.next = this.head
+      this.head.prev = curNode
+      this.head = curNode
+      // 所有的节点优先级都比新节点高
+    } else if (!temp) {
+      parent.next = curNode
+      curNode.prev = parent
+      this.last = curNode
+    } else {
+      parent.next = curNode
+      curNode.prev = parent
+      curNode.next = temp
+      temp.prev = curNode
+    }
+  }
+
+  // 读取优先级最高的数据/任务
+  peek() {
+    if (this.head) {
+      return this.head.value
+    }
+    return -1
+  }
+
+  // 删除队首元素
+  pop() {
+    if (this.head) {
+      let cur = this.head.value
+      this.head = this.head.next
+      if (this.head) {
+        this.head.prev = null
+      }
+      return cur
+    }
+    return -1
+  }
+}
+
+
+var q = new PriorityQueue();
+
+q.push(1, 10)
+q.push(2, 100)
+q.push({}, 20)
+q.push(10, 33)
+
+q.pop()
+q.push(100, 99)
+
+console.log(q.head)
+
+</script>
+</body>
+</html>
+
+
+https://leetcode-cn.com/problems/vvXgSW/

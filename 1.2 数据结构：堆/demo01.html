@@ -8,6 +8,9 @@
 <body>
 <script>
 
+  // 时间复杂度：数组：查找到对应阶段：O(n) ，插入O(n)
+  // 时间复杂度：链表：查找到对应阶段：O(n) , 插入O(1)
+
 class BinaryHeap {
   constructor(compare, array) {
     this.compare = compare
@@ -100,7 +103,7 @@ class BinaryHeap {
       return null
     }
     if (this.size == 1) {
-      let node = this.heap[this.size]
+      let node = this.heap[this.size - 1]
       this.size --
       this.heap.length = this.size
       return node
@@ -120,7 +123,7 @@ class BinaryHeap {
 
   // 构建堆，从最后一个非叶子节点开始遍历构建
   buildHeap() {
-    for (let i = this.parentIndex(this.size); i >= 0; i--) {
+    for (let i = this.parentIndex(this.size - 1); i >= 0; i--) {
       this.heapify(i)
     }
   }
